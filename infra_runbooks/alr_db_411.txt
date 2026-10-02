@@ -1,0 +1,14 @@
+ALERT_ID: ALR-DB-411
+ALERT_NAME: DATABASE_CONNECTION_TIMEOUT
+PRIORITY: P1 - Critical / Outage Severity
+SUMMARY: Application servers are losing active socket connections to the primary relational database instance.
+TRIGGER_REASON: Max database connection pool capacity has been breached due to a traffic spike or unindexed query loops.
+IMPACT: Complete service blackout. Applications will display 500 Internal Server Errors to customers.
+ESCALATION_CLASSIFICATION: Database Reliability Engineering
+ALARM_VALIDATION_STEPS:
+1. Monitor connection metrics on the Cloud SQL Health Portal: https://google.com
+2. Verify active instance configuration: 'gcloud sql instances describe prod-db-instance'.
+REMEDIATION_STEPS:
+1. Check active database threads. Run SDK command to see utilization logs: 'gcloud logging read "resource.type=cloudsql_database AND textPayload:timeout" --limit=20'
+2. Force-clear stale zombie connections by executing the patch command: 'gcloud sql instances patch prod-db-instance --activation-policy=ALWAYS'.
+ESCALATION_DETAILS: Instantly activate the Critical Incident Management (CIM) team via phone line extension 9110 or page the DB-OnCall team immediately via Slack channel #db-emergency-p1.

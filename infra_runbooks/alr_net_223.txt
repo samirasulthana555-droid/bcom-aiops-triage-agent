@@ -1,0 +1,14 @@
+ALERT_ID: ALR-NET-223
+ALERT_NAME: FLAPPING_ALARM_GATEWAY
+PRIORITY: P3 - Medium Severity Operations
+SUMMARY: Application Edge Gateway is experiencing high-frequency network oscillation.
+TRIGGER_REASON: Brief packet drops or intermittent routing health check failures cause the monitor to toggle rapidly between active and clear states.
+IMPACT: Causes extreme alert fatigue and floods the support queue with redundant incidents.
+ESCALATION_CLASSIFICATION: Core Network Operations
+ALARM_VALIDATION_STEPS:
+1. Access Network Topology Portal: https://google.com
+2. Run Cloud SDK status command: 'gcloud compute routers get-status vpc-router-prod --region=us-central1'.
+REMEDIATION_STEPS:
+1. Check metrics on the portal. Apply a conditional 7-minute SLA hold window.
+2. If the alarm does not auto-resolve within 7 minutes, trigger a configuration refresh: 'gcloud compute routers update vpc-router-prod --region=us-central1'.
+ESCALATION_DETAILS: Contact the NetOps-Triage squad via Slack channel #netops-alerts or open an active bridge channel on PagerDuty endpoint 'netops-p1-bridge'.

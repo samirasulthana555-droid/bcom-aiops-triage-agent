@@ -1,0 +1,14 @@
+ALERT_ID: ALR-GKE-991
+ALERT_NAME: GKE_POD_CRASHING_LOOP
+PRIORITY: P2 - High Severity Operations
+SUMMARY: A core system microservice container has entered a failing loop state.
+TRIGGER_REASON: The pod is exceeding its pre-allocated hardware memory limits, causing Kubernetes to trigger a CrashLoopBackOff status.
+IMPACT: Disrupts downstream API calls and breaks payment or transaction flows for active users.
+ESCALATION_CLASSIFICATION: Container Infrastructure Triage
+ALARM_VALIDATION_STEPS:
+1. Open GKE Workload Dashboard: https://google.com
+2. Run Google Cloud SDK command to check deployment status: 'gcloud container clusters list' followed by 'kubectl get pods -n production'.
+REMEDIATION_STEPS:
+1. Run SDK command to fetch terminal error logs: 'gcloud logging read "resource.type=k8s_container AND severity>=ERROR" --limit=50'
+2. If log confirms 'OOMKilled', execute scaling command: 'kubectl scale deployment target-service --replicas=3 -n production'.
+ESCALATION_DETAILS: Contact the Cloud-Infra-OnCall team via Slack channel #ops-gke-alerts or page the primary Lead Reliability Engineer at primary-oncall@broadcom.com.

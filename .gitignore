@@ -1,0 +1,11 @@
+# Ignore the Python virtual environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Ignore the vector database storage binaries
+chroma_db/
+
+# Ignore local configuration environment keys
+.env
